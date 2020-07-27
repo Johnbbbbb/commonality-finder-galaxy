@@ -1,1 +1,1 @@
-# commonality-finder-galaxy
+# Commonality-and-difference-finder
