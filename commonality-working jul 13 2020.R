@@ -74,23 +74,19 @@ for (i in 1:nrow(FirstSubstrateSet)){
   rightspaces<-c()
   
   YYYmotif <- unlist(strsplit(FTLwtletters, split = ""))
-  YYYposition <- match(x = "x", table = YYYmotif)
-  #position itself tells me how much is to the left of that X by what it's number is.  x at position 4 tells me that there are
-  #just 3 letters to the left of x
+  YYYposition <- match(x = "x", table = YYYmotif)  #position itself tells me how much is to the left of that X by what it's number is.  x at position 4 tells me that there are just 3 letters to the left of x
   
   YYYLettersToTheLeft <- YYYposition - 1
-  YYYLettersToTheRight <- length(YYYmotif) - YYYposition - 1
-  #how many letters to the right SHOULD just be length(motif)-position-1 if it's 5 long and x is at 3 then Y is at 4 and there is
-  #just 1 spot to the right of Y so LettersToTheRight<-1 because 5-3-1=1
+  YYYLettersToTheRight <- length(YYYmotif) - YYYposition - 1 #how many letters to the right SHOULD just be length(motif)-position-1 if it's 5 long and x is at 3 then Y is at 4 and there is just 1 spot to the right of Y so LettersToTheRight<-1 because 5-3-1=1
   
   
   
   if (YYYLettersToTheLeft < 7 | YYYLettersToTheRight < 7) {
+    #add blank spaces if the motif has less than 4 letters to the left/right
     leftspaces<-rep(" ",times=(7-YYYLettersToTheLeft))
     rightspaces<-rep(" ",times=7-(YYYLettersToTheRight))
-    #add blank spaces if the motif has less than 4 letters to the left/right
-    motif<-c(leftspaces,YYYmotif,rightspaces)
     #save that motif, which is the Y and +/- 4 amino acids, including truncation
+    motif<-c(leftspaces,YYYmotif,rightspaces)
     motif<-motif[!motif %in% "x"]
     motif<-paste(motif, sep="", collapse="")
     FTLwtletters<-motif
@@ -98,10 +94,10 @@ for (i in 1:nrow(FirstSubstrateSet)){
   }
   
   if(YYYLettersToTheLeft>6 && YYYLettersToTheRight>6){
-    motif<-YYYmotif
     #add blank spaces if the motif has less than 4 letters to the left/right
-    motif<-c(leftspaces,YYYmotif,rightspaces)
+    motif<-YYYmotif
     #save that motif, which is the Y and +/- 4 amino acids, including truncation
+    motif<-c(leftspaces,YYYmotif,rightspaces)
     motif<-motif[!motif %in% "x"]
     motif<-paste(motif, sep="", collapse="")
     FTLwtletters<-motif
@@ -109,9 +105,9 @@ for (i in 1:nrow(FirstSubstrateSet)){
   }
 }
 
+#vectors to house the second set of substrates and accession numbers
 D835Ymotifs=matrix(,nrow = nrow(SecondSubstrateSet),ncol=1)
 D835YAccessionNumbers<-matrix(data = Secondsubbackfreq[1,],ncol = 1)
-#vectors to house the second set of substrates and accession numbers
 
 for (i in 1:nrow(SecondSubstrateSet)){
   D835letters<-SecondSubstrateSet[i,4:18]
@@ -121,22 +117,16 @@ for (i in 1:nrow(SecondSubstrateSet)){
   rightspaces<-c()
   
   YYYmotif <- unlist(strsplit(D835letters, split = ""))
-  YYYposition <- match(x = "x", table = YYYmotif)
-  #position itself tells me how much is to the left of that X by what it's number is.  x at position 4 tells me that there are
-  #just 3 letters to the left of x
+  YYYposition <- match(x = "x", table = YYYmotif)#position itself tells me how much is to the left of that X by what it's number is.  x at position 4 tells me that there are just 3 letters to the left of x
   
-  YYYLettersToTheLeft <- YYYposition - 1
-  #how many letters to the right SHOULD just be length(motif)-position-1 if it's 5 long and x is at 3 then Y is at 4 and there is
-  #just 1 spot to the right of Y so LettersToTheRight<-1 because 5-3-1=1
+  YYYLettersToTheLeft <- YYYposition - 1 #how many letters to the right SHOULD just be length(motif)-position-1 if it's 5 long and x is at 3 then Y is at 4 and there is just 1 spot to the right of Y so LettersToTheRight<-1 because 5-3-1=1
   YYYLettersToTheRight <- length(YYYmotif) - YYYposition - 1
-  #then sanity check, we're currently looking only at +/-4, but this spot allows for up to +/- 7 as well, just depends on what the
-  #variable the user puts in is
   if (YYYLettersToTheLeft < 7 | YYYLettersToTheRight < 7) {
+    #add blank spaces if the motif has less than 4 letters to the left/right
     leftspaces<-rep(" ",times=(7-YYYLettersToTheLeft))
     rightspaces<-rep(" ",times=7-(YYYLettersToTheRight))
-    #add blank spaces if the motif has less than 4 letters to the left/right
-    motif<-c(leftspaces,YYYmotif,rightspaces)
     #save that motif, which is the Y and +/- 4 amino acids, including truncation
+    motif<-c(leftspaces,YYYmotif,rightspaces)
     motif<-motif[!motif %in% "x"]
     motif<-paste(motif, sep="", collapse="")
     D835letters<-motif
@@ -144,10 +134,10 @@ for (i in 1:nrow(SecondSubstrateSet)){
   }
   
   if(YYYLettersToTheLeft>6 && YYYLettersToTheRight>6){
-    motif<-YYYmotif
     #add blank spaces if the motif has less than 4 letters to the left/right
-    motif<-c(leftspaces,YYYmotif,rightspaces)
+    motif<-YYYmotif
     #save that motif, which is the Y and +/- 4 amino acids, including truncation
+    motif<-c(leftspaces,YYYmotif,rightspaces)
     motif<-motif[!motif %in% "x"]
     motif<-paste(motif, sep="", collapse="")
     D835letters<-motif
@@ -155,10 +145,9 @@ for (i in 1:nrow(SecondSubstrateSet)){
   }
 }
 
-
+#third set of substrates and accession numbers
 ITDmotifs=matrix(,nrow = nrow(ThirdSubstrateSet),ncol=1)
 ITDAccessionNumbers<-matrix(data = Thirdsubbackfreq[1,],ncol = 1)
-#third set of substrates and accession numbers
 
 
 for (i in 1:nrow(ThirdSubstrateSet)){
