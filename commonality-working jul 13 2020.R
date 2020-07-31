@@ -1,3 +1,4 @@
+#the following three sections bring in the input files and ensure they are properly aligned.  The if statements align them if they are misaligned
 FirstSubstrateSet<- read.csv("input1.csv", stringsAsFactors=FALSE, header = FALSE)
 Firstsubbackfreq<- read.csv("input2.csv", header=FALSE, stringsAsFactors=FALSE)
 SubstrateHeader<-FirstSubstrateSet[1,]
@@ -28,8 +29,8 @@ if(nrow(Thirdsubbackfreq[1,]>35)){
   }
 }
 
-#the above three sections bring in the input files and ensure they are properly aligned.  The if statements align them if they are misaligned
 
+#these create the names of the output files that this tool can create
 First_unshared_motifs_table<-"R1 substrates.csv"
 First_unshared_subbackfreq<-"R1 SBF.csv"
 
@@ -39,11 +40,11 @@ Second_unshared_subbackfreq<-"R2 SBf.csv"
 Third_unshared_motifs_table<-"R3 subs.csv"
 Third_unshared_subbackfreq<-"R3 SBF.csv"
 
-#the above 4 sections create the names of the output files that this tool can create
 
 
 
-
+#for each input file, mark the phospho-Tyrosine (which is always housed in column 11) 
+#with an xY to denote that is it a phospho and not regular tyrosine
 FirstxY<-rep("xY",times=nrow(FirstSubstrateSet))
 FirstSubstrateSet[,11]<-FirstxY
 
@@ -53,17 +54,16 @@ SecondSubstrateSet[,11]<-SecondxY
 ThirdxY<-rep("xY",times=nrow(ThirdSubstrateSet))
 ThirdSubstrateSet[,11]<-ThirdxY
 
-#for each input file, mark the phospho-Tyrosine (which is always housed in column 11) 
-#with an xY to denote that is it a phospho and not regular tyrosine
 
 
-#currently the substrates are a dataframe with many values, I want to collapse each substrate into a single variable, 
-#but if I simply use the paste() function then I lose any information about whether the substrate was truncated on the C or N terminal.  
+#currently the substrates are a dataframe with many values, we want to collapse each substrate into a single variable, 
+#but if we simply use the paste() function then we lose any information about whether the substrate was truncated on the C or N terminal.  
 #so the for loops below then are constructed so as to retain that information on how any substrate is truncated.
 
+
+#first, create the vectors which will house the first set of substrates and the first set of accession numbers
 FTLwtmotifs=matrix(,nrow = nrow(FirstSubstrateSet),ncol=1)
 FTLwtAccessionNumbers=matrix(data = Firstsubbackfreq[1,],ncol=1)
-#create the vectors which will house the first set of substrates and the first set of accession numbers
 
 
 for (i in 1:nrow(FirstSubstrateSet)){
