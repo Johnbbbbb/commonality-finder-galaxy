@@ -11,7 +11,7 @@
 		ln -s '$input5' input5.csv &&
 		ln -s '$input6' input6.csv &&
 		
-		Rscript '$__tool_directory__/commonality-working jul 13 2020.R'
+		Rscript '$__tool_directory__/commonality.R'
     ]]></command>
     <inputs>
 		<param format="csv" name="input1" type="data" label="First Substrate Set"/>
