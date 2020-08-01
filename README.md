@@ -1,1 +1,0 @@
-# Commonality-and-difference-finder
