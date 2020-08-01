@@ -165,8 +165,6 @@ for (i in 1:nrow(ThirdSubstrateSet)){
   #how many letters to the right SHOULD just be length(motif)-position-1 if it's 5 long and x is at 3 then Y is at 4 and there is
   #just 1 spot to the right of Y so LettersToTheRight<-1 because 5-3-1=1
   YYYLettersToTheRight <- length(YYYmotif) - YYYposition - 1
-  #then sanity check, we're currently looking only at +/-4, but this spot allows for up to +/- 7 as well, just depends on what the
-  #variable the user puts in is
   if (YYYLettersToTheLeft < 7 | YYYLettersToTheRight < 7) {
     leftspaces<-rep(" ",times=(7-YYYLettersToTheLeft))
     rightspaces<-rep(" ",times=7-(YYYLettersToTheRight))
@@ -189,24 +187,24 @@ for (i in 1:nrow(ThirdSubstrateSet)){
     motif<-paste(motif, sep="", collapse="")
     ITDletters<-motif
     ITDmotifs[i,1]<-ITDletters
-    # ITDAccessionNumbers[i,1]<-FirstSubstrateSet[i,3]
   }
 }
 
-
+#this tool is essentially looking for the intersection of three sets, and to do so it performs 1 intersection at a time
+#this find the intersection of the substrate sets
 SubstrateOverlap1<-intersect(D835Ymotifs,ITDmotifs)
 SubstrateOverlap1<-as.matrix(SubstrateOverlap1)
 SubstrateOverlapFINAL<-intersect(FTLwtmotifs,SubstrateOverlap1)
-#this tool is essentially looking for the intersection of three sets, and to do so it performs 1 intersection at a time
-#this find the intersection of the substrate sets
 
+#this tool is essentially looking for the intersection of three sets, and to do so it performs 1 intersection at a time
+#this find the intersection of the accession number sets
 AccessionOverlap1<-intersect(D835YAccessionNumbers,ITDAccessionNumbers)
 AccessionOverlapFinal<-intersect(AccessionOverlap1,FTLwtAccessionNumbers)
 AccessionOverlapFinal<-unlist(AccessionOverlapFinal)
-#this tool is essentially looking for the intersection of three sets, and to do so it performs 1 intersection at a time
-#this find the intersection of the accession number sets
 
 
+#for every accession number, go back to the original substrate background frequency file and find the protein statistics associated with that number
+#columnbind all those protein statistics together
 for (x in 1:length(AccessionOverlapFinal)) {
   for (y in 1:ncol(Firstsubbackfreq)) {
     Acc<-AccessionOverlapFinal[x]
@@ -216,13 +214,11 @@ for (x in 1:length(AccessionOverlapFinal)) {
     }
   }
 }
-#for every accession number, go back to the original substrate background frequency file and find the protein statistics associated with that number
-#columnbind all those protein statistics together
 FinalMatrix<-FinalMatrix[,2:ncol(FinalMatrix)]
 
 
-#write all files, in the proper format so that the files coming out look like the files coming in
 
+#write all files, in the proper format so that the files coming out look like the files coming in
 if(grepl(pattern = "Properties", x=FinalMatrix[22,1])==FALSE){
   Outputmatrix<-cbind(Firstsubbackfreq[,1],FinalMatrix)
   write.table(x=Outputmatrix,file = Shared_subbackfreq_table,quote = FALSE,sep = ",",row.names = FALSE,col.names = FALSE,na="")
